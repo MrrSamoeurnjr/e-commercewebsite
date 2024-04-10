@@ -1,0 +1,91 @@
+<app-navbar [cartCount]="totalCart"></app-navbar>
+<main class="container-fluid mt-5 mb-5">
+    <div class="bg-white text-center fw-bold mt-5 p-5" *ngIf="totalCart == 0">
+        <h4>
+            Cart is empty!
+        </h4>
+    </div>
+    <div class="row" *ngIf="totalCart > 0">
+        <div class="col-lg-8 cartBox">
+            <div class="row" *ngFor="let data of getCartData">
+                <div class="col-lg-2">
+                    <img src="{{data.pdImg}}" alt="">
+                </div>
+                <div class="col-lg-10">
+                    <h4>{{data.pdName}}</h4>
+                    <!-- <p>{{data.pdDesc}}</p> -->
+                    <p class="mt-2 mb-3"><span><i class="bi bi-currency-pound"></i></span>{{data.pdPrice | number}}</p>
+                    <button class="btn btn-sm btn-danger" (click)="removeCart(data)">Remove</button>
+                    <div class="mt-2 mb-2">
+                        <button class="btn btn-sm btn-dark" (click)="plusMinusCount(data,'minus')" [disabled]="data.plusMinusCounter > 1 ? false :true">-</button>
+                        <input type="number" class="col-lg-1" value="{{data.plusMinusCounter}}" disabled>
+                        <button class="btn btn-sm btn-dark" (click)="plusMinusCount(data,'plus')" [disabled]="data.plusMinusCounter < 5 ? false :true">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-12 mt-5">
+            <div class="priceBox">
+                <h5>Price Details</h5>
+                <hr>
+                <p class="mt-2 mb-2">
+                    <span class="float-start"> Price( {{totalCart}} )</span>
+                    <span class="float-end"><i class="bi bi-currency-pound"></i> {{totalAmount | number}} </span>
+                </p>
+                <div class="clearfix"></div>
+                <p class="mt-2 mb-2">
+                    <span class="float-start"> Delivery</span>
+                    <span class="float-end"> Free</span>
+                </p>
+                <div class="clearfix"></div>
+                <hr>
+                <p class="mt-2 mb-2">
+                    <span class="float-start fw-bold"> Total Amount</span>
+                    <span class="float-end fw-bold"><i class="bi bi-currency-pound"></i> {{totalAmount | number}}</span>
+                </p>
+                <div class="clearfix mb-5"></div>
+                <button type="button" class="btn btn-md btn-warning col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Place order <i class="bi bi-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+    <!-- modal -->
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="&#64;mdo">Open modal for @mdo</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="&#64;fat">Open modal for @fat</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="&#64;getbootstrap">Open modal for @getbootstrap</button> -->
+    
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Order</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Enter Email Id</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Enter Address</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+          <div class="mb-3">
+            <input type="radio" checked><label>Cash on delivery</label>
+          </div>
+          <div class="mb-3">
+            <h5>Total Amount :<i class="bi bi-currency-pound"></i> {{this.totalAmount | number}}</h5>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-warning" (click)="orderClick()">Order Now</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+      
+</main>
